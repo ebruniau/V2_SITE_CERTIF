@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archives - Edgar BRUNIAU</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Archives EB</div>
+        <nav class="nav">
+            <a href="#home">Accueil</a>
+            <a href="#about">À propos</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
+
+    <div class="mindmap-container" id="mindmapContainer">
+        <div class="mindmap" id="mindmap">
+            <!-- Central node -->
+            <div class="node central-node" data-id="central" style="left: 50%; top: 50%;">
+                <div class="node-circle"></div>
+                <div class="node-label">Edgar BRUNIAU</div>
+            </div>
+
+            <!-- Theme nodes -->
+            <div class="node theme-node" data-id="theme1" style="left: 30%; top: 35%;">
+                <div class="node-circle"></div>
+                <div class="node-label">Développement</div>
+            </div>
+
+            <div class="node theme-node" data-id="theme2" style="left: 70%; top: 35%;">
+                <div class="node-circle"></div>
+                <div class="node-label">Design</div>
+            </div>
+
+            <div class="node theme-node" data-id="theme3" style="left: 30%; top: 65%;">
+                <div class="node-circle"></div>
+                <div class="node-label">Certifications</div>
+            </div>
+
+            <div class="node theme-node" data-id="theme4" style="left: 70%; top: 65%;">
+                <div class="node-circle"></div>
+                <div class="node-label">Projets</div>
+            </div>
+
+            <!-- Document nodes -->
+            <div class="node doc-node" data-id="doc1" style="left: 20%; top: 25%;">
+                <div class="node-circle"></div>
+                <div class="node-label">React Guide</div>
+            </div>
+
+            <div class="node doc-node" data-id="doc2" style="left: 35%; top: 20%;">
+                <div class="node-circle"></div>
+                <div class="node-label">Node.js API</div>
+            </div>
+
+            <div class="node doc-node" data-id="doc3" style="left: 65%; top: 25%;">
+                <div class="node-circle"></div>
+                <div class="node-label">UI/UX Principles</div>
+            </div>
+
+            <div class="node doc-node" data-id="doc4" style="left: 75%; top: 45%;">
+                <div class="node-circle"></div>
+                <div class="node-label">Brand Identity</div>
+            </div>
+
+            <div class="node doc-node" data-id="doc5" style="left: 25%; top: 75%;">
+                <div class="node-circle"></div>
+                <div class="node-label">AWS Certification</div>
+            </div>
+
+            <div class="node doc-node" data-id="doc6" style="left: 75%; top: 75%;">
+                <div class="node-circle"></div>
+                <div class="node-label">Portfolio 2024</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="card" id="card">
+        <div class="card-header">
+            <h3 class="card-title" id="cardTitle">Titre</h3>
+            <button class="card-close" id="cardClose">&times;</button>
+        </div>
+        <div class="card-description" id="cardDescription">Description</div>
+        <div class="card-meta" id="cardMeta"></div>
+        <div class="docs-list" id="docsList" style="display: none;"></div>
+        <div class="card-actions" id="cardActions"></div>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" id="zoomIn">+</button>
+        <button class="control-btn" id="zoomOut">−</button>
+        <button class="control-btn" id="resetView">⌂</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
