@@ -1,11 +1,115 @@
-// Animation d'entrée du site B
+// Variables globales pour l'organicité
+let organicTime = 0;
+let mouseX = 0;
+let mouseY = 0;
+let isInteracting = false;
+
+// Animation d'entrée avec effet organique
 window.addEventListener('load', function() {
     const loadingOverlay = document.getElementById('loadingOverlay');
     
     setTimeout(() => {
         loadingOverlay.classList.add('hidden');
         document.body.classList.add('loaded');
-    }, 1000);
+        initMatrixRain();
+        startOrganicAnimations();
+    }, 1500);
+});
+
+// Effet Matrix Rain pour le vibe coding
+function initMatrixRain() {
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = "01{}[]();.,<>|\\/-+=*&^%$#@!~`「」『』アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+    const charArray = chars.split('');
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for(let i = 0; i < columns; i++) {
+        drops[i] = 1;
+    }
+
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(248, 249, 250, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = `hsla(${20 + organicTime * 0.1}, 60%, 50%, 0.8)`;
+        ctx.font = `${fontSize}px monospace`;
+
+        for(let i = 0; i < drops.length; i++) {
+            const text = charArray[Math.floor(Math.random() * charArray.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            
+            if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(drawMatrix, 100);
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Animations organiques continues
+function startOrganicAnimations() {
+    function animate() {
+        organicTime += 0.01;
+        
+        // Mise à jour des variables CSS pour l'organicité
+        document.documentElement.style.setProperty('--organic-flow', Math.sin(organicTime) * 0.1);
+        document.documentElement.style.setProperty('--bg-shift', `${Math.sin(organicTime * 0.3) * 10}deg`);
+        document.documentElement.style.setProperty('--pulse-intensity', 1 + Math.sin(organicTime * 2) * 0.1);
+
+        // Particules de code flottantes
+        if (Math.random() > 0.98) {
+            createCodeParticle();
+        }
+
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+// Création de particules de code
+function createCodeParticle() {
+    const particle = document.createElement('div');
+    particle.className = 'code-particle';
+    particle.textContent = ['{}', '[]', '()', '<>', '=', '+', '-', '*', '/', '&', '|'][Math.floor(Math.random() * 11)];
+    particle.style.left = Math.random() * window.innerWidth + 'px';
+    particle.style.top = window.innerHeight + 'px';
+    particle.style.animationDelay = Math.random() * 2 + 's';
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+        if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+        }
+    }, 4000);
+}
+
+// Suivi de la souris pour l'interactivité
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX / window.innerWidth;
+    mouseY = e.clientY / window.innerHeight;
+    
+    // Effet de parallaxe subtil sur les nœuds
+    document.querySelectorAll('.node').forEach((node, index) => {
+        const offsetX = (mouseX - 0.5) * (5 + index % 3);
+        const offsetY = (mouseY - 0.5) * (3 + index % 2);
+        node.style.setProperty('--mouse-x', `${offsetX}px`);
+        node.style.setProperty('--mouse-y', `${offsetY}px`);
+    });
 });
 
 const mindmap = document.getElementById('mindmap');
@@ -19,12 +123,12 @@ let isDragging = false;
 let startX, startY;
 let translateX = 0, translateY = 0;
 
-// Data structure for nodes (inchangée du site A)
+// Data structure avec thématique coding
 const nodeData = {
     central: {
         title: "Edgar BRUNIAU",
-        description: "Développeur Full-Stack passionné par les technologies web modernes et l'innovation numérique. Spécialisé en React, Node.js et architecture cloud.",
-        tags: ["Développeur", "Designer", "Entrepreneur"],
+        description: "Développeur Full-Stack passionné par l'innovation et l'art du code. Architecture moderne, UX intuitive et technologies de pointe.",
+        tags: ["Full-Stack Dev", "Code Artist", "Tech Innovator"],
         links: [
             { text: "Portfolio", url: "#portfolio" },
             { text: "LinkedIn", url: "#linkedin" },
@@ -34,81 +138,80 @@ const nodeData = {
     },
     theme1: {
         title: "Développement",
-        description: "Ressources et documentations sur le développement web, les frameworks modernes et les bonnes pratiques.",
+        description: "L'art du code moderne : frameworks avant-gardistes, architectures scalables et patterns innovants pour des applications exceptionnelles.",
         tags: ["React", "Node.js", "JavaScript", "TypeScript"],
         docs: ["React Guide", "Node.js API", "TypeScript Best Practices", "GraphQL Documentation"]
     },
     theme2: {
         title: "Design",
-        description: "Principes de design, guidelines UI/UX et ressources créatives pour des interfaces utilisateur exceptionnelles.",
-        tags: ["UI/UX", "Design System", "Figma", "Adobe"],
+        description: "Fusion créative entre design et technologie : interfaces immersives, expériences utilisateur fluides et identités visuelles marquantes.",
+        tags: ["UI/UX", "Design System", "Figma", "Motion Design"],
         docs: ["UI/UX Principles", "Brand Identity", "Design System Guide", "Figma Workflows"]
     },
     theme3: {
         title: "Certifications",
-        description: "Certifications professionnelles et formations continues dans le domaine du développement et du cloud.",
-        tags: ["AWS", "Google Cloud", "Microsoft", "Certifications"],
+        description: "Excellence technique certifiée : maîtrise cloud, développement avancé et veille technologique continue pour rester à la pointe.",
+        tags: ["AWS", "Google Cloud", "Microsoft", "Tech Mastery"],
         docs: ["AWS Certification", "Google Cloud Professional", "React Developer Cert", "Node.js Certification"]
     },
     theme4: {
         title: "Projets",
-        description: "Portfolio de projets réalisés, études de cas et retours d'expérience sur les développements récents.",
-        tags: ["Portfolio", "Case Studies", "Open Source", "Projets"],
+        description: "Portfolio d'innovations : projets disruptifs, expérimentations créatives et réalisations techniques qui repoussent les limites.",
+        tags: ["Innovation", "Case Studies", "Open Source", "R&D"],
         docs: ["Portfolio 2024", "E-commerce Platform", "SaaS Dashboard", "Mobile App React Native"]
     },
     doc1: {
         title: "React Guide",
-        description: "Guide complet pour maîtriser React : hooks, patterns, performance et écosystème.",
-        tags: ["React", "JavaScript", "Frontend"],
+        description: "Maîtrise complète de React : hooks avancés, patterns architecturaux, optimisations performance et écosystème moderne.",
+        tags: ["React", "JavaScript", "Frontend", "Performance"],
         links: [
-            { text: "Ouvrir le document", url: "#doc1" }
+            { text: "Ouvrir le guide", url: "#doc1" }
         ]
     },
     doc2: {
         title: "Node.js API",
-        description: "Documentation pour créer des APIs robustes avec Node.js, Express et bases de données.",
-        tags: ["Node.js", "API", "Backend"],
+        description: "Architecture backend robuste : APIs scalables, microservices, sécurité avancée et intégrations cloud natives.",
+        tags: ["Node.js", "API", "Backend", "Microservices"],
         links: [
-            { text: "Ouvrir le document", url: "#doc2" }
+            { text: "Explorer l'API", url: "#doc2" }
         ]
     },
     doc3: {
         title: "UI/UX Principles",
-        description: "Principes fondamentaux du design d'interface et d'expérience utilisateur moderne.",
-        tags: ["Design", "UI/UX", "Figma"],
+        description: "Design centré utilisateur : psychologie cognitive, patterns d'interaction et interfaces immersives pour l'ère moderne.",
+        tags: ["Design", "UI/UX", "Psychology", "Innovation"],
         links: [
-            { text: "Ouvrir le document", url: "#doc3" }
+            { text: "Découvrir les principes", url: "#doc3" }
         ]
     },
     doc4: {
         title: "Brand Identity",
-        description: "Guide de création et gestion d'identité de marque pour les entreprises tech.",
-        tags: ["Branding", "Design", "Marketing"],
+        description: "Création d'identités visuelles fortes : storytelling visuel, systèmes graphiques cohérents et impact émotionnel.",
+        tags: ["Branding", "Visual Identity", "Strategy", "Impact"],
         links: [
-            { text: "Ouvrir le document", url: "#doc4" }
+            { text: "Voir les créations", url: "#doc4" }
         ]
     },
     doc5: {
         title: "AWS Certification",
-        description: "Préparation et ressources pour les certifications AWS Solutions Architect.",
-        tags: ["AWS", "Cloud", "Certification"],
+        description: "Expertise cloud architecture : solutions scalables, sécurité enterprise et optimisation des coûts sur AWS.",
+        tags: ["AWS", "Cloud Architecture", "DevOps", "Scale"],
         links: [
-            { text: "Ouvrir le document", url: "#doc5" }
+            { text: "Valider les compétences", url: "#doc5" }
         ]
     },
     doc6: {
         title: "Portfolio 2024",
-        description: "Présentation des projets réalisés en 2024, technologies utilisées et résultats obtenus.",
-        tags: ["Portfolio", "Projets", "2024"],
+        description: "Showcase d'innovations récentes : projets full-stack, expérimentations UI et solutions techniques créatives.",
+        tags: ["Portfolio", "Innovation", "Full-Stack", "Creative Tech"],
         links: [
-            { text: "Voir le portfolio", url: "#portfolio2024" }
+            { text: "Explorer le portfolio", url: "#portfolio2024" }
         ]
     }
 };
 
-// Create connections avec masquage des extrémités sous les bulles
-function createConnections() {
-    // Clear existing connections
+// Connexions organiques avec effet de flow
+function createOrganicConnections() {
     document.querySelectorAll('.connection').forEach(conn => conn.remove());
     
     const connections = [
@@ -124,13 +227,14 @@ function createConnections() {
         { from: 'theme4', to: 'doc6' }
     ];
 
-    connections.forEach(conn => {
+    connections.forEach((conn, index) => {
         const fromNode = document.querySelector(`[data-id="${conn.from}"]`);
         const toNode = document.querySelector(`[data-id="${conn.to}"]`);
         
         if (fromNode && toNode) {
             const connection = document.createElement('div');
             connection.className = 'connection';
+            connection.style.animationDelay = `${index * 0.5}s`;
             
             const fromRect = fromNode.getBoundingClientRect();
             const toRect = toNode.getBoundingClientRect();
@@ -146,11 +250,11 @@ function createConnections() {
             const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
             const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
             
-            // Rayons augmentés pour bien masquer les extrémités sous les bulles
-            const fromRadius = fromNode.classList.contains('central-node') ? 32 : 
-                              fromNode.classList.contains('theme-node') ? 25 : 18;
-            const toRadius = toNode.classList.contains('central-node') ? 32 : 
-                            toNode.classList.contains('theme-node') ? 25 : 18;
+            // Rayons augmentés pour masquer sous les bulles
+            const fromRadius = fromNode.classList.contains('central-node') ? 35 : 
+                              fromNode.classList.contains('theme-node') ? 28 : 20;
+            const toRadius = toNode.classList.contains('central-node') ? 35 : 
+                            toNode.classList.contains('theme-node') ? 28 : 20;
             
             const unitX = deltaX / length;
             const unitY = deltaY / length;
@@ -172,63 +276,60 @@ function createConnections() {
     });
 }
 
-// Show card (fonction identique du site A)
-function showCard(nodeId) {
+// Interface de carte améliorée
+function showOrganicCard(nodeId) {
     const data = nodeData[nodeId];
     if (!data) return;
 
+    // Animation d'entrée organique
+    card.style.transform = 'translate(-50%, -50%) scale(0) rotate(5deg)';
+    
     document.getElementById('cardTitle').textContent = data.title;
     document.getElementById('cardDescription').textContent = data.description;
 
-    // Tags
+    // Tags avec animation différée
     const metaContainer = document.getElementById('cardMeta');
     metaContainer.innerHTML = '';
-    data.tags.forEach(tag => {
+    data.tags.forEach((tag, index) => {
         const tagElement = document.createElement('div');
         tagElement.className = 'card-tag';
         tagElement.textContent = tag;
+        tagElement.style.animationDelay = `${index * 0.1}s`;
         metaContainer.appendChild(tagElement);
     });
 
-    // Actions/Links
+    // Actions avec effet organique
     const actionsContainer = document.getElementById('cardActions');
     actionsContainer.innerHTML = '';
     
     if (data.links) {
-        if (nodeId.startsWith('doc')) {
-            const mainLink = data.links[0];
+        data.links.forEach((link, index) => {
             const linkElement = document.createElement('a');
             linkElement.className = 'card-link';
-            linkElement.href = mainLink.url;
-            linkElement.textContent = mainLink.text;
+            linkElement.href = link.url;
+            linkElement.textContent = link.text;
+            linkElement.style.animationDelay = `${index * 0.2}s`;
             actionsContainer.appendChild(linkElement);
-        } else {
-            data.links.forEach(link => {
-                const linkElement = document.createElement('a');
-                linkElement.className = 'card-link';
-                linkElement.href = link.url;
-                linkElement.textContent = link.text;
-                actionsContainer.appendChild(linkElement);
-            });
-        }
+        });
     }
 
-    // Documents list for theme nodes
+    // Documents avec effet cascade
     const docsList = document.getElementById('docsList');
     if (data.docs) {
         docsList.style.display = 'block';
         docsList.innerHTML = '';
-        data.docs.forEach(doc => {
+        data.docs.forEach((doc, index) => {
             const docElement = document.createElement('div');
             docElement.className = 'doc-item';
             docElement.textContent = doc;
+            docElement.style.animationDelay = `${index * 0.15}s`;
             docElement.addEventListener('click', () => {
-                hideCard();
+                hideOrganicCard();
                 const docId = Object.keys(nodeData).find(key => 
                     nodeData[key].title === doc
                 );
                 if (docId) {
-                    setTimeout(() => showCard(docId), 300);
+                    setTimeout(() => showOrganicCard(docId), 400);
                 }
             });
             docsList.appendChild(docElement);
@@ -238,35 +339,84 @@ function showCard(nodeId) {
     }
 
     overlay.classList.add('active');
-    card.classList.add('active');
+    setTimeout(() => {
+        card.classList.add('active');
+        card.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)';
+    }, 100);
 }
 
-// Hide card
-function hideCard() {
+function hideOrganicCard() {
+    card.style.transform = 'translate(-50%, -50%) scale(0) rotate(-3deg)';
     overlay.classList.remove('active');
-    card.classList.remove('active');
+    setTimeout(() => {
+        card.classList.remove('active');
+    }, 300);
 }
 
-// Event listeners (identiques du site A)
+// Event listeners avec feedback tactile
 document.querySelectorAll('.node').forEach(node => {
     node.addEventListener('click', (e) => {
         e.stopPropagation();
-        showCard(node.dataset.id);
+        // Effet de ripple au clic
+        const ripple = document.createElement('div');
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s linear';
+        ripple.style.left = '50%';
+        ripple.style.top = '50%';
+        ripple.style.width = '100px';
+        ripple.style.height = '100px';
+        ripple.style.marginLeft = '-50px';
+        ripple.style.marginTop = '-50px';
+        ripple.style.pointerEvents = 'none';
+        
+        node.appendChild(ripple);
+        
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+        
+        showOrganicCard(node.dataset.id);
+    });
+
+    // Effet hover organique
+    node.addEventListener('mouseenter', () => {
+        isInteracting = true;
+    });
+    
+    node.addEventListener('mouseleave', () => {
+        isInteracting = false;
     });
 });
 
-cardClose.addEventListener('click', hideCard);
-overlay.addEventListener('click', hideCard);
+// Animation de ripple
+const rippleStyle = document.createElement('style');
+rippleStyle.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(rippleStyle);
 
-// Zoom controls
+cardClose.addEventListener('click', hideOrganicCard);
+overlay.addEventListener('click', hideOrganicCard);
+
+// Contrôles zoom organiques
 document.getElementById('zoomIn').addEventListener('click', () => {
-    scale = Math.min(scale * 1.2, 3);
+    scale = Math.min(scale * 1.3, 3);
     mindmap.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    createCodeParticle();
 });
 
 document.getElementById('zoomOut').addEventListener('click', () => {
-    scale = Math.max(scale / 1.2, 0.3);
+    scale = Math.max(scale / 1.3, 0.3);
     mindmap.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    createCodeParticle();
 });
 
 document.getElementById('resetView').addEventListener('click', () => {
@@ -274,82 +424,135 @@ document.getElementById('resetView').addEventListener('click', () => {
     translateX = 0;
     translateY = 0;
     mindmap.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    // Effet de reset visuel
+    document.body.style.filter = 'brightness(1.2)';
+    setTimeout(() => {
+        document.body.style.filter = '';
+    }, 200);
 });
 
-// Pan functionality
+// Pan avec inertie organique
+let velocity = { x: 0, y: 0 };
+let lastMoveTime = 0;
+
 mindmapContainer.addEventListener('mousedown', (e) => {
     if (e.target === mindmapContainer || e.target === mindmap) {
         isDragging = true;
         startX = e.clientX - translateX;
         startY = e.clientY - translateY;
         mindmapContainer.style.cursor = 'grabbing';
+        velocity = { x: 0, y: 0 };
+        lastMoveTime = Date.now();
     }
 });
 
 document.addEventListener('mousemove', (e) => {
     if (isDragging) {
-        translateX = e.clientX - startX;
-        translateY = e.clientY - startY;
+        const currentTime = Date.now();
+        const deltaTime = currentTime - lastMoveTime;
+        
+        const newTranslateX = e.clientX - startX;
+        const newTranslateY = e.clientY - startY;
+        
+        velocity.x = (newTranslateX - translateX) / deltaTime;
+        velocity.y = (newTranslateY - translateY) / deltaTime;
+        
+        translateX = newTranslateX;
+        translateY = newTranslateY;
+        
         mindmap.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        lastMoveTime = currentTime;
     }
 });
 
 document.addEventListener('mouseup', () => {
-    isDragging = false;
-    mindmapContainer.style.cursor = 'grab';
+    if (isDragging) {
+        isDragging = false;
+        mindmapContainer.style.cursor = 'grab';
+        
+        // Inertie organique
+        const friction = 0.95;
+        const applyInertia = () => {
+            if (Math.abs(velocity.x) > 0.1 || Math.abs(velocity.y) > 0.1) {
+                translateX += velocity.x * 10;
+                translateY += velocity.y * 10;
+                velocity.x *= friction;
+                velocity.y *= friction;
+                
+                mindmap.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                requestAnimationFrame(applyInertia);
+            }
+        };
+        applyInertia();
+    }
 });
 
-// Wheel zoom
+// Zoom avec wheel organique
 mindmapContainer.addEventListener('wheel', (e) => {
     e.preventDefault();
     const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
-    scale = Math.max(0.3, Math.min(3, scale * zoomFactor));
+    const newScale = Math.max(0.3, Math.min(3, scale * zoomFactor));
+    
+    // Zoom centré sur la souris
+    const rect = mindmapContainer.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    const scaleRatio = newScale / scale;
+    translateX = mouseX - (mouseX - translateX) * scaleRatio;
+    translateY = mouseY - (mouseY - translateY) * scaleRatio;
+    
+    scale = newScale;
     mindmap.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 });
 
-// Initialize
+// Initialisation organique
 setTimeout(() => {
-    createConnections();
-}, 600);
+    createOrganicConnections();
+    
+    // Animation d'entrée séquentielle des nœuds
+    document.querySelectorAll('.node').forEach((node, index) => {
+        node.style.opacity = '0';
+        node.style.transform = 'translate(-50%, -50%) scale(0.5) rotate(180deg)';
+        
+        setTimeout(() => {
+            node.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            node.style.opacity = '1';
+            node.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)';
+        }, index * 200);
+    });
+}, 800);
 
-// Recreate connections on window resize
+// Recréation organique des connexions au resize
 window.addEventListener('resize', () => {
     setTimeout(() => {
-        createConnections();
-    }, 100);
+        createOrganicConnections();
+    }, 150);
 });
 
-// Intersection Observer pour les animations d'entrée (inspiré du site B)
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// Gestion des touches pour l'accessibilité
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && card.classList.contains('active')) {
+        hideOrganicCard();
+    }
+});
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translate(-50%, -50%) scale(1)';
-        }
-    });
-}, observerOptions);
+// Performance monitoring
+let fps = 0;
+let lastTime = performance.now();
 
-// Observer tous les nœuds pour l'animation d'entrée
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.node').forEach(node => {
-        node.style.opacity = '0.3';
-        node.style.transform = 'translate(-50%, -50%) scale(0.8)';
-        node.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-        observer.observe(node);
-    });
+function monitorPerformance() {
+    const currentTime = performance.now();
+    fps = 1000 / (currentTime - lastTime);
+    lastTime = currentTime;
     
-    // Animation décalée pour les nœuds
-    setTimeout(() => {
-        document.querySelectorAll('.node').forEach((node, index) => {
-            setTimeout(() => {
-                node.style.opacity = '1';
-                node.style.transform = 'translate(-50%, -50%) scale(1)';
-            }, index * 150);
-        });
-    }, 800);
-});
+    // Ajustement automatique des animations si performance faible
+    if (fps < 30) {
+        document.documentElement.style.setProperty('--animation-speed', '0.5');
+    } else {
+        document.documentElement.style.setProperty('--animation-speed', '1');
+    }
+    
+    requestAnimationFrame(monitorPerformance);
+}
+monitorPerformance();
