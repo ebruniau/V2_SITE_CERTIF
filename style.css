@@ -1,4 +1,4 @@
-/* =================================
+        /* =================================
         DÉCLARATION DES POLICES PERSONNALISÉES
         ================================= */
 
@@ -71,15 +71,25 @@
         }
 
         /* =================================
-        VARIABLES CSS DYNAMIQUES
+        VARIABLES CSS BASÉES SUR LA PALETTE COSMIQUE
         ================================= */
         :root {
-            --primary-hue: 20;
-            --secondary-hue: 35;
-            --tertiary-hue: 45;
-            --bg-shift: 0deg;
-            --pulse-intensity: 1;
+            /* Couleurs de la palette cosmique */
+            --cosmic-pink: #EBCAC7;
+            --cosmic-rose: #8A5967;
+            --cosmic-wine: #7C363D;
+            --cosmic-red: #C85550;
+            --cosmic-maroon: #5F171C;
+            --cosmic-deep: #350711;
+            --cosmic-darker: #2C070E;
+            --cosmic-navy: #0B1526;
+            --cosmic-purple: #19142A;
+            --cosmic-void: #070510;
+            
             --organic-flow: 0;
+            --pulse-intensity: 1;
+            --mouse-x: 0px;
+            --mouse-y: 0px;
         }
 
         * {
@@ -93,20 +103,46 @@
             font-weight: 400;
             line-height: 1.7;
             min-height: 100vh;
-            color: #2c2c2c;
+            color: var(--cosmic-pink);
             overflow: hidden;
             position: relative;
             transition: filter 0.3s ease;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/9/9e/Milky_Way_IR_Spitzer.jpg') center/cover fixed;
         }
 
-        /* Loading avec particules organiques */
+        /* Overlay sombre pour contraste */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(7, 5, 16, 0.7) 0%,
+                rgba(25, 20, 42, 0.6) 25%,
+                rgba(11, 21, 38, 0.65) 50%,
+                rgba(44, 7, 14, 0.6) 75%,
+                rgba(7, 5, 16, 0.75) 100%
+            );
+            z-index: 0;
+            animation: cosmicOverlay 20s ease-in-out infinite;
+        }
+
+        @keyframes cosmicOverlay {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Loading avec particules cosmiques */
         .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #ffffff;
+            background: var(--cosmic-void);
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -123,8 +159,8 @@
             width: 60px;
             height: 60px;
             border: 3px solid transparent;
-            border-top: 3px solid hsl(var(--primary-hue), 70%, 60%);
-            border-right: 2px solid hsl(var(--secondary-hue), 60%, 65%);
+            border-top: 3px solid var(--cosmic-red);
+            border-right: 2px solid var(--cosmic-rose);
             border-radius: 50%;
             animation: organicSpin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
             position: relative;
@@ -137,7 +173,7 @@
             left: -6px;
             right: -6px;
             bottom: -6px;
-            border: 1px solid hsl(var(--tertiary-hue), 50%, 70%);
+            border: 1px solid var(--cosmic-pink);
             border-radius: 50%;
             animation: organicSpin 3s ease-in-out infinite reverse;
         }
@@ -150,151 +186,35 @@
             100% { transform: rotate(360deg) scale(1); }
         }
 
-        /* Background organique vivant */
-        @keyframes organicFlow {
-            0% { 
-                background: 
-                    radial-gradient(circle at calc(20% + var(--organic-flow) * 5%), calc(30% + var(--organic-flow) * 3%), hsla(var(--secondary-hue), 60%, 75%, 0.4) 0%, transparent 50%),
-                    radial-gradient(circle at calc(80% - var(--organic-flow) * 3%), calc(10% + var(--organic-flow) * 2%), hsla(var(--tertiary-hue), 50%, 80%, 0.3) 0%, transparent 40%),
-                    radial-gradient(circle at calc(10% + var(--organic-flow) * 4%), calc(80% - var(--organic-flow) * 2%), hsla(var(--primary-hue), 70%, 70%, 0.65) 0%, transparent 45%),
-                    radial-gradient(circle at calc(90% - var(--organic-flow) * 2%), calc(70% + var(--organic-flow) * 3%), hsla(var(--primary-hue), 60%, 65%, 0.5) 0%, transparent 55%),
-                    radial-gradient(circle at calc(60% + var(--organic-flow) * 3%), calc(90% - var(--organic-flow) * 4%), hsla(var(--primary-hue), 75%, 60%, 0.45) 0%, transparent 35%),
-                    radial-gradient(circle at calc(40% - var(--organic-flow) * 2%), calc(20% + var(--organic-flow) * 5%), hsla(var(--primary-hue), 80%, 55%, 0.39) 0%, transparent 30%),
-                    linear-gradient(calc(45deg + var(--bg-shift)), 
-                        hsla(var(--secondary-hue), 40%, 85%, 0.1) 0%, 
-                        hsla(var(--tertiary-hue), 45%, 82%, 0.15) 25%, 
-                        hsla(var(--primary-hue), 60%, 75%, 0.35) 50%,
-                        hsla(var(--primary-hue), 55%, 70%, 0.25) 75%,
-                        hsla(var(--primary-hue), 70%, 65%, 0.15) 100%
-                    ),
-                    #f8f9fa;
-            }
-            50% {
-                background: 
-                    radial-gradient(circle at calc(25% + var(--organic-flow) * 4%), calc(35% - var(--organic-flow) * 2%), hsla(var(--secondary-hue), 65%, 78%, 0.45) 0%, transparent 52%),
-                    radial-gradient(circle at calc(75% - var(--organic-flow) * 4%), calc(15% + var(--organic-flow) * 3%), hsla(var(--tertiary-hue), 55%, 83%, 0.35) 0%, transparent 42%),
-                    radial-gradient(circle at calc(15% + var(--organic-flow) * 3%), calc(85% - var(--organic-flow) * 3%), hsla(var(--primary-hue), 75%, 73%, 0.7) 0%, transparent 47%),
-                    radial-gradient(circle at calc(85% - var(--organic-flow) * 3%), calc(65% + var(--organic-flow) * 4%), hsla(var(--primary-hue), 65%, 68%, 0.55) 0%, transparent 57%),
-                    radial-gradient(circle at calc(55% + var(--organic-flow) * 2%), calc(95% - var(--organic-flow) * 3%), hsla(var(--primary-hue), 80%, 63%, 0.5) 0%, transparent 37%),
-                    radial-gradient(circle at calc(45% - var(--organic-flow) * 4%), calc(25% + var(--organic-flow) * 2%), hsla(var(--primary-hue), 85%, 58%, 0.42) 0%, transparent 32%),
-                    linear-gradient(calc(50deg + var(--bg-shift)), 
-                        hsla(var(--secondary-hue), 45%, 87%, 0.12) 0%, 
-                        hsla(var(--tertiary-hue), 50%, 85%, 0.18) 25%, 
-                        hsla(var(--primary-hue), 65%, 78%, 0.38) 50%,
-                        hsla(var(--primary-hue), 60%, 73%, 0.28) 75%,
-                        hsla(var(--primary-hue), 75%, 68%, 0.18) 100%
-                    ),
-                    #f8f9fa;
-            }
-            100% { 
-                background: 
-                    radial-gradient(circle at calc(18% + var(--organic-flow) * 6%), calc(32% + var(--organic-flow) * 4%), hsla(var(--secondary-hue), 58%, 73%, 0.38) 0%, transparent 48%),
-                    radial-gradient(circle at calc(82% - var(--organic-flow) * 2%), calc(8% + var(--organic-flow) * 5%), hsla(var(--tertiary-hue), 48%, 78%, 0.28) 0%, transparent 38%),
-                    radial-gradient(circle at calc(12% + var(--organic-flow) * 5%), calc(78% - var(--organic-flow) * 4%), hsla(var(--primary-hue), 68%, 68%, 0.6) 0%, transparent 43%),
-                    radial-gradient(circle at calc(88% - var(--organic-flow) * 4%), calc(72% + var(--organic-flow) * 2%), hsla(var(--primary-hue), 58%, 63%, 0.48) 0%, transparent 53%),
-                    radial-gradient(circle at calc(58% + var(--organic-flow) * 4%), calc(88% - var(--organic-flow) * 5%), hsla(var(--primary-hue), 73%, 58%, 0.43) 0%, transparent 33%),
-                    radial-gradient(circle at calc(42% - var(--organic-flow) * 3%), calc(18% + var(--organic-flow) * 6%), hsla(var(--primary-hue), 78%, 53%, 0.36) 0%, transparent 28%),
-                    linear-gradient(calc(40deg + var(--bg-shift)), 
-                        hsla(var(--secondary-hue), 38%, 83%, 0.08) 0%, 
-                        hsla(var(--tertiary-hue), 42%, 80%, 0.13) 25%, 
-                        hsla(var(--primary-hue), 58%, 73%, 0.33) 50%,
-                        hsla(var(--primary-hue), 53%, 68%, 0.23) 75%,
-                        hsla(var(--primary-hue), 68%, 63%, 0.13) 100%
-                    ),
-                    #f8f9fa;
-            }
-        }
-
-        body.loaded {
-            animation: organicFlow 25s ease-in-out infinite;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(170, 171, 185, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% 10%, rgba(203, 218, 224, 0.3) 0%, transparent 40%),
-                radial-gradient(circle at 10% 80%, rgba(250, 215, 153, 0.65) 0%, transparent 45%),
-                radial-gradient(circle at 90% 70%, rgba(244, 185, 126, 0.514) 0%, transparent 55%),
-                radial-gradient(circle at 60% 90%, rgba(250, 152, 87, 0.459) 0%, transparent 35%),
-                radial-gradient(circle at 40% 20%, rgba(254, 94, 20, 0.39) 0%, transparent 30%),
-                radial-gradient(circle at 70% 40%, rgba(211, 53, 10, 0.377) 0%, transparent 35%),
-                radial-gradient(circle at 50% 50%, rgba(254, 94, 20, 0.493) 0%, transparent 30%),
-                linear-gradient(45deg, 
-                    rgba(170, 171, 185, 0.1) 0%, 
-                    rgba(203, 218, 224, 0.15) 25%, 
-                    rgba(250, 215, 153, 0.35) 50%,
-                    rgba(244, 185, 126, 0.25) 75%,
-                    rgba(250, 151, 87, 0.15) 100%
-                ),
-                #f8f9fa;
-        }
-
-        /* Particules flottantes organiques */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at calc(30% + var(--organic-flow) * 2%) calc(20% - var(--organic-flow) * 1%), rgba(255, 255, 255, 0.6) 0%, transparent 25%),
-                radial-gradient(circle at calc(70% - var(--organic-flow) * 3%) calc(60% + var(--organic-flow) * 2%), rgba(255, 255, 255, 0.4) 0%, transparent 20%),
-                radial-gradient(circle at calc(20% + var(--organic-flow) * 4%) calc(80% - var(--organic-flow) * 2%), rgba(255, 255, 255, 0.5) 0%, transparent 30%);
-            pointer-events: none;
-            z-index: 1;
-            animation: organicMist 30s ease-in-out infinite alternate;
-        }
-
-        @keyframes organicMist {
-            0% { 
-                transform: translateX(-3px) translateY(-2px) rotate(0deg) scale(0.98);
-                opacity: 0.4;
-            }
-            25% {
-                transform: translateX(2px) translateY(3px) rotate(0.8deg) scale(1.02);
-                opacity: 0.6;
-            }
-            50% {
-                transform: translateX(4px) translateY(-1px) rotate(-0.5deg) scale(0.99);
-                opacity: 0.5;
-            }
-            75% {
-                transform: translateX(-1px) translateY(2px) rotate(0.3deg) scale(1.01);
-                opacity: 0.7;
-            }
-            100% { 
-                transform: translateX(-2px) translateY(-3px) rotate(-0.2deg) scale(0.97);
-                opacity: 0.3;
-            }
-        }
-
-        /* Header organique pulsant */
+        /* Header cosmique */
         .header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             height: 80px;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(7, 5, 16, 0.4);
             backdrop-filter: blur(25px) saturate(180%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(235, 202, 199, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0 20px;
             z-index: 1000;
             box-shadow: 
-                0 4px 25px rgba(0, 0, 0, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+                0 4px 25px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(235, 202, 199, 0.2);
             animation: headerPulse 8s ease-in-out infinite;
         }
 
         @keyframes headerPulse {
             0%, 100% { 
                 backdrop-filter: blur(25px) saturate(180%);
-                box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+                box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(235, 202, 199, 0.2);
             }
             50% { 
                 backdrop-filter: blur(30px) saturate(200%);
-                box-shadow: 0 6px 35px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+                box-shadow: 0 6px 35px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(235, 202, 199, 0.3);
             }
         }
 
@@ -305,7 +225,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            background: linear-gradient(90deg, transparent, var(--cosmic-pink), transparent);
             animation: headerShimmer 4s ease-in-out infinite;
         }
 
@@ -324,38 +244,38 @@
         .combined-badge {
             font-family: 'Marianne', -apple-system, BlinkMacSystemFont, sans-serif;
             display: inline-block;
-            background: rgba(255, 255, 255, 0.35);
+            background: rgba(7, 5, 16, 0.6);
             backdrop-filter: blur(15px) saturate(150%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: #3a3a3a;
+            border: 1px solid var(--cosmic-pink);
+            color: var(--cosmic-pink);
             padding: 0.75rem 1.5rem;
             border-radius: 50px;
             font-size: 1.1rem;
             font-weight: 600;
             letter-spacing: 0.3px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(200, 133, 80, 0.3);
             animation: badgeGlow 6s ease-in-out infinite;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes badgeGlow {
             0%, 100% { 
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(200, 133, 80, 0.3);
                 transform: scale(1);
             }
             50% { 
-                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15), 0 0 20px hsla(var(--primary-hue), 50%, 70%, 0.3);
+                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5), 0 0 30px rgba(200, 133, 80, 0.5);
                 transform: scale(1.02);
             }
         }
 
         .combined-badge:hover {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(7, 5, 16, 0.8);
             transform: scale(1.05);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), 0 0 25px hsla(var(--primary-hue), 60%, 65%, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 40px rgba(200, 133, 80, 0.6);
         }
 
-        /* Container principal avec respiration */
+        /* Container principal */
         .mindmap-container {
             position: fixed;
             top: 80px;
@@ -365,12 +285,6 @@
             overflow: hidden;
             cursor: grab;
             z-index: 2;
-            animation: containerBreathing 12s ease-in-out infinite;
-        }
-
-        @keyframes containerBreathing {
-            0%, 100% { filter: brightness(1) saturate(1); }
-            50% { filter: brightness(1.05) saturate(1.1); }
         }
 
         .mindmap-container:active {
@@ -385,7 +299,31 @@
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Nœuds organiques vivants */
+        /* Effet de pixelisation autour des éléments */
+        .pixel-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .pixel-dot {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--cosmic-pink);
+            border-radius: 50%;
+            filter: blur(0.5px);
+            animation: pixelFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes pixelFloat {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-2px) scale(1.1); opacity: 1; }
+        }
+
+        /* Nœuds organiques avec couleurs cosmiques */
         .node {
             position: absolute;
             display: flex;
@@ -418,12 +356,9 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(12px) saturate(120%);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(12px) saturate(120%);
         }
 
         .node-circle::before {
@@ -432,7 +367,6 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: scale(0.8);
@@ -448,66 +382,83 @@
         }
 
         .node:hover .node-circle {
-            background: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
             transform: scale(1.1);
             backdrop-filter: blur(20px) saturate(150%);
         }
 
-        /* Nœud central - organisme vivant */
+        /* Nœud central - couleur cosmique centrale */
         .central-node .node-circle {
             width: 60px;
             height: 60px;
-            background: hsla(var(--tertiary-hue), 80%, 75%, 0.8);
-            border: 2px solid hsla(var(--tertiary-hue), 85%, 70%, 0.9);
+            background: rgba(25, 20, 42, 0.8);
+            border: 2px solid var(--cosmic-purple);
             animation: centralOrganicPulse 6s ease-in-out infinite;
             box-shadow: 
-                0 15px 40px hsla(var(--tertiary-hue), 70%, 65%, 0.4),
-                0 5px 20px hsla(var(--tertiary-hue), 75%, 70%, 0.3);
+                0 15px 40px rgba(25, 20, 42, 0.6),
+                0 0 30px rgba(138, 89, 103, 0.4);
         }
 
         .central-node .node-circle::before {
-            background: hsla(var(--tertiary-hue), 70%, 80%, 0.4);
+            background: rgba(25, 20, 42, 0.4);
         }
 
         @keyframes centralOrganicPulse {
             0%, 100% { 
                 transform: scale(1); 
                 box-shadow: 
-                    0 15px 40px hsla(var(--tertiary-hue), 70%, 65%, 0.4), 
-                    0 5px 20px hsla(var(--tertiary-hue), 75%, 70%, 0.3),
-                    0 0 0 0 hsla(var(--tertiary-hue), 80%, 70%, 0.7); 
+                    0 15px 40px rgba(25, 20, 42, 0.6), 
+                    0 0 30px rgba(138, 89, 103, 0.4),
+                    0 0 0 0 rgba(25, 20, 42, 0.7); 
             }
             33% { 
                 transform: scale(1.08); 
                 box-shadow: 
-                    0 20px 50px hsla(var(--tertiary-hue), 75%, 70%, 0.5), 
-                    0 8px 25px hsla(var(--tertiary-hue), 80%, 75%, 0.4),
-                    0 0 0 20px hsla(var(--tertiary-hue), 85%, 75%, 0); 
+                    0 20px 50px rgba(25, 20, 42, 0.7), 
+                    0 0 40px rgba(138, 89, 103, 0.6),
+                    0 0 0 20px rgba(25, 20, 42, 0); 
             }
             66% { 
                 transform: scale(0.95); 
                 box-shadow: 
-                    0 12px 35px hsla(var(--tertiary-hue), 65%, 60%, 0.35), 
-                    0 4px 15px hsla(var(--tertiary-hue), 70%, 65%, 0.25),
-                    0 0 0 5px hsla(var(--tertiary-hue), 75%, 65%, 0.3); 
+                    0 12px 35px rgba(25, 20, 42, 0.5), 
+                    0 0 25px rgba(138, 89, 103, 0.3),
+                    0 0 0 5px rgba(25, 20, 42, 0.3); 
             }
         }
 
-        /* Nœuds thèmes - pulsation organique */
+        /* Nœuds thèmes - couleurs selon position */
         .theme-node .node-circle {
             width: 45px;
             height: 45px;
-            background: hsla(var(--secondary-hue), 75%, 70%, 0.7);
-            border: 2px solid hsla(var(--secondary-hue), 80%, 65%, 0.8);
             animation: themeOrganicFloat 9s ease-in-out infinite;
-            box-shadow: 
-                0 12px 30px hsla(var(--secondary-hue), 65%, 60%, 0.3),
-                0 4px 12px hsla(var(--secondary-hue), 70%, 65%, 0.2);
+        }
+
+        .theme-node[data-id="theme1"] .node-circle {
+            background: rgba(124, 54, 61, 0.8);
+            border: 2px solid var(--cosmic-wine);
+            box-shadow: 0 12px 30px rgba(124, 54, 61, 0.4), 0 0 25px rgba(200, 133, 80, 0.3);
+        }
+
+        .theme-node[data-id="theme2"] .node-circle {
+            background: rgba(138, 89, 103, 0.8);
+            border: 2px solid var(--cosmic-rose);
+            box-shadow: 0 12px 30px rgba(138, 89, 103, 0.4), 0 0 25px rgba(235, 202, 199, 0.3);
+        }
+
+        .theme-node[data-id="theme3"] .node-circle {
+            background: rgba(95, 23, 28, 0.8);
+            border: 2px solid var(--cosmic-maroon);
+            box-shadow: 0 12px 30px rgba(95, 23, 28, 0.4), 0 0 25px rgba(53, 7, 17, 0.3);
+        }
+
+        .theme-node[data-id="theme4"] .node-circle {
+            background: rgba(200, 133, 80, 0.8);
+            border: 2px solid var(--cosmic-red);
+            box-shadow: 0 12px 30px rgba(200, 133, 80, 0.4), 0 0 25px rgba(138, 89, 103, 0.3);
         }
 
         .theme-node .node-circle::before {
-            background: hsla(var(--secondary-hue), 65%, 75%, 0.4);
+            background: rgba(235, 202, 199, 0.3);
         }
 
         @keyframes themeOrganicFloat {
@@ -517,20 +468,51 @@
             75% { transform: translateY(-2px) rotate(0.5deg) scale(1.01); }
         }
 
-        /* Nœuds documents - vibration organique */
+        /* Nœuds documents - couleurs variées */
         .doc-node .node-circle {
             width: 30px;
             height: 30px;
-            background: hsla(var(--primary-hue), 80%, 65%, 0.7);
-            border: 2px solid hsla(var(--primary-hue), 85%, 60%, 0.8);
             animation: docOrganicWave 11s ease-in-out infinite;
-            box-shadow: 
-                0 8px 20px hsla(var(--primary-hue), 75%, 55%, 0.3),
-                0 2px 8px hsla(var(--primary-hue), 80%, 60%, 0.2);
+        }
+
+        .doc-node[data-id="doc1"] .node-circle {
+            background: rgba(53, 7, 17, 0.8);
+            border: 2px solid var(--cosmic-deep);
+            box-shadow: 0 8px 20px rgba(53, 7, 17, 0.4);
+        }
+
+        .doc-node[data-id="doc2"] .node-circle {
+            background: rgba(44, 7, 14, 0.8);
+            border: 2px solid var(--cosmic-darker);
+            box-shadow: 0 8px 20px rgba(44, 7, 14, 0.4);
+        }
+
+        .doc-node[data-id="doc3"] .node-circle {
+            background: rgba(235, 202, 199, 0.8);
+            border: 2px solid var(--cosmic-pink);
+            box-shadow: 0 8px 20px rgba(235, 202, 199, 0.4);
+        }
+
+        .doc-node[data-id="doc4"] .node-circle {
+            background: rgba(138, 89, 103, 0.8);
+            border: 2px solid var(--cosmic-rose);
+            box-shadow: 0 8px 20px rgba(138, 89, 103, 0.4);
+        }
+
+        .doc-node[data-id="doc5"] .node-circle {
+            background: rgba(11, 21, 38, 0.8);
+            border: 2px solid var(--cosmic-navy);
+            box-shadow: 0 8px 20px rgba(11, 21, 38, 0.4);
+        }
+
+        .doc-node[data-id="doc6"] .node-circle {
+            background: rgba(200, 133, 80, 0.8);
+            border: 2px solid var(--cosmic-red);
+            box-shadow: 0 8px 20px rgba(200, 133, 80, 0.4);
         }
 
         .doc-node .node-circle::before {
-            background: hsla(var(--primary-hue), 70%, 70%, 0.4);
+            background: rgba(235, 202, 199, 0.2);
         }
 
         @keyframes docOrganicWave {
@@ -541,76 +523,76 @@
             80% { transform: translateY(0px) scale(0.98) rotate(-0.1deg); }
         }
 
-        /* Labels organiques */
+        /* Labels cosmiques */
         .node-label {
             font-family: 'Marianne', -apple-system, BlinkMacSystemFont, sans-serif;
             margin-top: 12px;
             font-size: 12px;
-            color: #4a4a4a;
+            color: var(--cosmic-pink);
             text-align: center;
             max-width: 120px;
             word-wrap: break-word;
             opacity: 0.9;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 500;
-            text-shadow: 0 2px 5px rgba(255, 255, 255, 0.8);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
 
         .node:hover .node-label {
             opacity: 1;
-            color: #2c2c2c;
+            color: var(--cosmic-pink);
             transform: translateY(-3px) scale(1.05);
-            text-shadow: 0 3px 8px rgba(255, 255, 255, 0.9);
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.8);
         }
 
-        /* Connexions organiques vivantes */
+        /* Connexions cosmiques */
         .connection {
             position: absolute;
             background: linear-gradient(90deg, 
-                hsla(var(--primary-hue), 70%, 45%, 0.8) 0%,
-                hsla(var(--primary-hue), 75%, 50%, 0.9) 50%,
-                hsla(var(--primary-hue), 70%, 45%, 0.8) 100%);
+                rgba(200, 133, 80, 0.6) 0%,
+                rgba(235, 202, 199, 0.8) 50%,
+                rgba(200, 133, 80, 0.6) 100%);
             height: 2px;
             transform-origin: left center;
-            opacity: 0.8;
+            opacity: 0.7;
             animation: connectionOrganicFlow 15s ease-in-out infinite;
             z-index: 1;
             border-radius: 1px;
-            box-shadow: 0 1px 4px hsla(var(--primary-hue), 65%, 40%, 0.4);
+            box-shadow: 0 1px 4px rgba(200, 133, 80, 0.4);
         }
 
         @keyframes connectionOrganicFlow {
             0%, 100% { 
-                opacity: 0.6; 
+                opacity: 0.5; 
                 transform: scaleY(1);
                 filter: hue-rotate(0deg);
             }
             25% { 
-                opacity: 0.9; 
+                opacity: 0.8; 
                 transform: scaleY(1.2);
                 filter: hue-rotate(5deg);
             }
             50% { 
-                opacity: 0.7; 
+                opacity: 0.6; 
                 transform: scaleY(0.8);
                 filter: hue-rotate(-3deg);
             }
             75% { 
-                opacity: 0.85; 
+                opacity: 0.75; 
                 transform: scaleY(1.1);
                 filter: hue-rotate(3deg);
             }
         }
 
-        /* Cartes modales organiques */
+        /* Cartes modales cosmiques */
         .card {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(7, 5, 16, 0.9);
             backdrop-filter: blur(30px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--cosmic-pink);
             border-radius: 28px;
             padding: 2rem;
             max-width: 500px;
@@ -618,19 +600,20 @@
             z-index: 2000;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.15),
-                0 10px 20px rgba(0, 0, 0, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                0 10px 20px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(235, 202, 199, 0.3),
+                0 0 40px rgba(200, 133, 80, 0.2);
             overflow: hidden;
             animation: cardBreathing 8s ease-in-out infinite;
         }
 
         @keyframes cardBreathing {
             0%, 100% { 
-                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(235, 202, 199, 0.3), 0 0 40px rgba(200, 133, 80, 0.2);
             }
             50% { 
-                box-shadow: 0 35px 70px rgba(0, 0, 0, 0.18), 0 12px 25px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+                box-shadow: 0 35px 70px rgba(0, 0, 0, 0.7), 0 12px 25px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(235, 202, 199, 0.4), 0 0 50px rgba(200, 133, 80, 0.3);
             }
         }
 
@@ -641,7 +624,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            background: linear-gradient(90deg, transparent, var(--cosmic-pink), transparent);
             animation: cardShimmer 3s ease-in-out infinite;
         }
 
@@ -665,16 +648,16 @@
             font-family: 'Marianne', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: 1.5rem;
             font-weight: 700;
-            color: #2c2c2c;
+            color: var(--cosmic-pink);
             margin: 0;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
 
         .card-close {
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(7, 5, 16, 0.6);
+            border: 1px solid var(--cosmic-pink);
             border-radius: 50%;
-            color: #4a4a4a;
+            color: var(--cosmic-pink);
             font-size: 18px;
             cursor: pointer;
             padding: 8px;
@@ -690,18 +673,19 @@
         }
 
         .card-close:hover {
-            background: rgba(255, 255, 255, 0.6);
-            color: #2c2c2c;
+            background: rgba(200, 133, 80, 0.8);
+            color: var(--cosmic-void);
             transform: scale(1.15) rotate(90deg);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(200, 133, 80, 0.4);
         }
 
         .card-description {
             font-family: 'Spectral', Georgia, serif;
-            color: #4a4a4a;
+            color: var(--cosmic-pink);
             line-height: 1.6;
             margin-bottom: 1.5rem;
             font-size: 1rem;
+            opacity: 0.9;
         }
 
         .card-meta {
@@ -712,20 +696,31 @@
         }
 
         .card-tag {
-            background: hsla(var(--secondary-hue), 60%, 70%, 0.4);
-            color: hsl(var(--primary-hue), 70%, 30%);
+            background: rgba(138, 89, 103, 0.4);
+            color: var(--cosmic-pink);
             padding: 0.4rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 500;
             font-family: 'Marianne', sans-serif;
-            border: 1px solid hsla(var(--secondary-hue), 65%, 65%, 0.5);
+            border: 1px solid rgba(138, 89, 103, 0.6);
             transition: all 0.3s ease;
+            animation: tagFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes tagFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-1px); }
+        }
+
+        .card-tag:nth-child(2n) {
+            animation-delay: -1s;
         }
 
         .card-tag:hover {
-            background: hsla(var(--secondary-hue), 65%, 75%, 0.6);
-            transform: scale(1.05);
+            background: rgba(138, 89, 103, 0.6);
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 89, 103, 0.4);
         }
 
         .card-actions {
@@ -736,8 +731,8 @@
         }
 
         .card-link {
-            background: hsla(var(--primary-hue), 70%, 60%, 0.3);
-            color: hsl(var(--primary-hue), 80%, 25%);
+            background: rgba(200, 133, 80, 0.3);
+            color: var(--cosmic-pink);
             padding: 0.75rem 1.5rem;
             border-radius: 15px;
             text-decoration: none;
@@ -745,14 +740,14 @@
             font-weight: 500;
             font-family: 'Marianne', sans-serif;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid hsla(var(--primary-hue), 75%, 55%, 0.4);
+            border: 1px solid rgba(200, 133, 80, 0.5);
             backdrop-filter: blur(10px);
         }
 
         .card-link:hover {
-            background: hsla(var(--primary-hue), 75%, 65%, 0.5);
+            background: rgba(200, 133, 80, 0.5);
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 10px 25px hsla(var(--primary-hue), 70%, 50%, 0.3);
+            box-shadow: 0 10px 25px rgba(200, 133, 80, 0.4);
         }
 
         .docs-list {
@@ -763,33 +758,33 @@
 
         .doc-item {
             padding: 0.75rem 1rem;
-            color: #4a4a4a;
+            color: var(--cosmic-pink);
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 15px;
             margin: 4px 0;
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(25, 20, 42, 0.4);
+            border: 1px solid rgba(235, 202, 199, 0.2);
             font-family: 'Spectral', serif;
         }
 
         .doc-item:hover {
-            background: hsla(var(--tertiary-hue), 60%, 80%, 0.4);
-            color: #2c2c2c;
+            background: rgba(138, 89, 103, 0.6);
+            color: var(--cosmic-pink);
             transform: translateX(8px) scale(1.02);
-            border: 1px solid hsla(var(--tertiary-hue), 65%, 75%, 0.6);
-            box-shadow: 0 5px 15px hsla(var(--tertiary-hue), 55%, 70%, 0.3);
+            border: 1px solid var(--cosmic-rose);
+            box-shadow: 0 5px 15px rgba(138, 89, 103, 0.4);
         }
 
-        /* Overlay organique */
+        /* Overlay cosmique */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(7, 5, 16, 0.6);
             backdrop-filter: blur(12px);
             z-index: 1500;
             opacity: 0;
@@ -802,7 +797,7 @@
             visibility: visible;
         }
 
-        /* Contrôles organiques */
+        /* Contrôles cosmiques */
         .controls {
             position: fixed;
             bottom: 30px;
@@ -816,15 +811,15 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid var(--cosmic-pink);
+            background: rgba(7, 5, 16, 0.8);
             backdrop-filter: blur(20px);
-            color: #2c2c2c;
+            color: var(--cosmic-pink);
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(200, 133, 80, 0.2);
             font-family: 'Marianne', sans-serif;
             display: flex;
             align-items: center;
@@ -846,33 +841,34 @@
         }
 
         .control-btn:hover {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(200, 133, 80, 0.8);
+            color: var(--cosmic-void);
             transform: scale(1.15) translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 30px rgba(200, 133, 80, 0.5);
             animation-play-state: paused;
         }
 
-        /* Scrollbar organique */
+        /* Scrollbar cosmique */
         .docs-list::-webkit-scrollbar {
             width: 6px;
         }
 
         .docs-list::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(7, 5, 16, 0.3);
             border-radius: 3px;
         }
 
         .docs-list::-webkit-scrollbar-thumb {
-            background: hsla(var(--primary-hue), 60%, 60%, 0.6);
+            background: rgba(200, 133, 80, 0.6);
             border-radius: 3px;
             transition: background 0.3s ease;
         }
 
         .docs-list::-webkit-scrollbar-thumb:hover {
-            background: hsla(var(--primary-hue), 70%, 55%, 0.8);
+            background: rgba(200, 133, 80, 0.8);
         }
 
-        /* Code Matrix Effect */
+        /* Code Matrix Effect cosmique */
         .matrix-rain {
             position: fixed;
             top: 0;
@@ -880,15 +876,15 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 0;
-            opacity: 0.05;
+            z-index: 1;
+            opacity: 0.15;
         }
 
         .matrix-rain canvas {
             display: block;
         }
 
-        /* Effet particules de code */
+        /* Effet particules de code cosmiques */
         @keyframes codeParticles {
             0% { opacity: 0; transform: translateY(0px) rotate(0deg); }
             10% { opacity: 1; }
@@ -898,15 +894,43 @@
 
         .code-particle {
             position: absolute;
-            color: hsla(var(--primary-hue), 60%, 50%, 0.3);
+            color: rgba(200, 133, 80, 0.4);
             font-family: 'Courier New', monospace;
             font-size: 12px;
             pointer-events: none;
             animation: codeParticles 4s linear infinite;
-            z-index: 0;
+            z-index: 1;
         }
 
-        /* Responsive organique */
+        /* Curseur de souris avec effet de pixelisation */
+        .mouse-pixel-effect {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .mouse-pixel-effect.active {
+            opacity: 1;
+        }
+
+        .mouse-pixel {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--cosmic-red);
+            border-radius: 50%;
+            filter: blur(0.3px);
+            animation: mousePixelFloat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes mousePixelFloat {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+        }
+
+        /* Responsive cosmique */
         @media (max-width: 1024px) {
             .header {
                 height: 70px;
@@ -1162,5 +1186,5 @@
         .control-btn:active,
         .card-link:active,
         .combined-badge:active {
-            box-shadow: 0 0 30px hsla(var(--primary-hue), 80%, 60%, 0.6);
+            box-shadow: 0 0 30px rgba(200, 133, 80, 0.8);
         }
