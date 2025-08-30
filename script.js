@@ -16,15 +16,15 @@ window.addEventListener('load', function() {
     }, 1500);
 });
 
-// Effet de pixelisation de la souris amélioré
+// Effet de pixelisation de la souris amélioré - plus compact
 function initMousePixelEffect() {
     const mouseEffect = document.getElementById('mousePixelEffect');
     
-    // Créer les pixels de la souris
-    for (let i = 0; i < 6; i++) {
+    // Créer moins de pixels, plus compacts
+    for (let i = 0; i < 4; i++) {
         const pixel = document.createElement('div');
         pixel.className = 'mouse-pixel';
-        pixel.style.animationDelay = `${i * 0.15}s`;
+        pixel.style.animationDelay = `${i * 0.2}s`;
         mouseEffect.appendChild(pixel);
     }
 
@@ -38,11 +38,11 @@ function initMousePixelEffect() {
         mouseEffect.style.top = e.clientY + 'px';
         mouseEffect.classList.add('active');
         
-        // Positionner les pixels autour de la souris
+        // Positionner les pixels plus près de la souris
         const pixels = mouseEffect.querySelectorAll('.mouse-pixel');
         pixels.forEach((pixel, index) => {
-            const angle = (index / pixels.length) * Math.PI * 2 + organicTime;
-            const distance = 12 + Math.sin(organicTime * 2 + index) * 3;
+            const angle = (index / pixels.length) * Math.PI * 2 + organicTime * 0.5;
+            const distance = 6 + Math.sin(organicTime * 3 + index) * 2;
             const x = Math.cos(angle) * distance;
             const y = Math.sin(angle) * distance;
             
@@ -53,12 +53,12 @@ function initMousePixelEffect() {
         clearTimeout(mouseTimeout);
         mouseTimeout = setTimeout(() => {
             mouseEffect.classList.remove('active');
-        }, 300);
+        }, 200);
         
-        // Effet de parallaxe subtil sur les nœuds
+        // Effet de parallaxe très subtil
         document.querySelectorAll('.node').forEach((node, index) => {
-            const offsetX = (mouseX - 0.5) * (3 + index % 2);
-            const offsetY = (mouseY - 0.5) * (2 + index % 2);
+            const offsetX = (mouseX - 0.5) * (1 + index % 2);
+            const offsetY = (mouseY - 0.5) * (1 + index % 2);
             node.style.setProperty('--mouse-x', `${offsetX}px`);
             node.style.setProperty('--mouse-y', `${offsetY}px`);
         });
