@@ -1,19 +1,30 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archives - Edgar BRUNIAU</title>
+    
+    <!-- Préchargement des polices -->
+    <link rel="preload" href="fonts/Marianne-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Spectral-Regular.ttf" as="font" type="font/truetype" crossorigin>
+    <link rel="preload" href="fonts/Marianne-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Spectral-Medium.ttf" as="font" type="font/truetype" crossorigin>
+    
+    <link rel="icon" href="https://art.pixilart.com/7bc2c0adcac2d39.png">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+    </div>
+
     <div class="header">
-        <div class="logo">Archives EB</div>
-        <nav class="nav">
-            <a href="#home">Accueil</a>
-            <a href="#about">À propos</a>
-            <a href="#contact">Contact</a>
-        </nav>
+        <div class="header-content">
+            <div class="combined-badge">Archives - Edgar BRUNIAU</div>
+        </div>
     </div>
 
     <div class="mindmap-container" id="mindmapContainer">
@@ -76,6 +87,7 @@
                 <div class="node-label">Portfolio 2024</div>
             </div>
 
+            <!-- Connections will be drawn dynamically -->
         </div>
     </div>
 
