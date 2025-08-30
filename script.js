@@ -1,7 +1,5 @@
 // Variables globales pour l'organicité
 let organicTime = 0;
-let mouseX = 0;
-let mouseY = 0;
 let isInteracting = false;
 
 // Animation d'entrée simplifiée
@@ -12,67 +10,17 @@ window.addEventListener('load', function() {
         loadingOverlay.classList.add('hidden');
         document.body.classList.add('loaded');
         startOrganicAnimations();
-        initMousePixelEffect();
     }, 1500);
 });
 
-// Effet de pixelisation de la souris amélioré - plus compact
-function initMousePixelEffect() {
-    const mouseEffect = document.getElementById('mousePixelEffect');
-    
-    // Créer moins de pixels, plus compacts
-    for (let i = 0; i < 4; i++) {
-        const pixel = document.createElement('div');
-        pixel.className = 'mouse-pixel';
-        pixel.style.animationDelay = `${i * 0.2}s`;
-        mouseEffect.appendChild(pixel);
-    }
-
-    let mouseTimeout;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX / window.innerWidth;
-        mouseY = e.clientY / window.innerHeight;
-        
-        mouseEffect.style.left = e.clientX + 'px';
-        mouseEffect.style.top = e.clientY + 'px';
-        mouseEffect.classList.add('active');
-        
-        // Positionner les pixels plus près de la souris
-        const pixels = mouseEffect.querySelectorAll('.mouse-pixel');
-        pixels.forEach((pixel, index) => {
-            const angle = (index / pixels.length) * Math.PI * 2 + organicTime * 0.5;
-            const distance = 6 + Math.sin(organicTime * 3 + index) * 2;
-            const x = Math.cos(angle) * distance;
-            const y = Math.sin(angle) * distance;
-            
-            pixel.style.left = x + 'px';
-            pixel.style.top = y + 'px';
-        });
-        
-        clearTimeout(mouseTimeout);
-        mouseTimeout = setTimeout(() => {
-            mouseEffect.classList.remove('active');
-        }, 200);
-        
-        // Effet de parallaxe très subtil
-        document.querySelectorAll('.node').forEach((node, index) => {
-            const offsetX = (mouseX - 0.5) * (1 + index % 2);
-            const offsetY = (mouseY - 0.5) * (1 + index % 2);
-            node.style.setProperty('--mouse-x', `${offsetX}px`);
-            node.style.setProperty('--mouse-y', `${offsetY}px`);
-        });
-    });
-}
-
-// Animations organiques continues
+// Animations organiques continues avec cubic-bezier plus fluide
 function startOrganicAnimations() {
     function animate() {
-        organicTime += 0.008;
+        organicTime += 0.006;
         
         // Mise à jour des variables CSS pour l'organicité
-        document.documentElement.style.setProperty('--organic-flow', Math.sin(organicTime) * 0.1);
-        document.documentElement.style.setProperty('--pulse-intensity', 1 + Math.sin(organicTime * 1.5) * 0.05);
+        document.documentElement.style.setProperty('--organic-flow', Math.sin(organicTime) * 0.08);
+        document.documentElement.style.setProperty('--pulse-intensity', 1 + Math.sin(organicTime * 1.2) * 0.04);
 
         requestAnimationFrame(animate);
     }
