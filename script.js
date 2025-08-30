@@ -2,16 +2,6 @@
 let organicTime = 0;
 let isInteracting = false;
 
-// Animation d'entrée simplifiée
-window.addEventListener('load', function() {
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    
-    setTimeout(() => {
-        loadingOverlay.classList.add('hidden');
-        document.body.classList.add('loaded');
-        startOrganicAnimations();
-    }, 1500);
-});
 
 // Animations organiques continues avec cubic-bezier plus fluide
 function startOrganicAnimations() {
